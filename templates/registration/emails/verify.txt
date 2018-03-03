@@ -1,0 +1,15 @@
+Hello {{ user.first_name }},
+
+Please activate your account for {{ email }} by clicking the link below:
+
+
+
+{{ path }}
+
+
+
+After that, you can login!
+
+Thank you,
+
+The stuff

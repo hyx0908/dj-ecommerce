@@ -1,0 +1,72 @@
+{% url 'home' as home_url %}
+{% url 'cart:home' as cart_url %}
+{% url 'products:product-list' as products_url %}
+{% url 'contact' as contact_url %}
+{% url 'accounts:login' as login_url %}
+{% url 'accounts:logout' as logout_url %}
+{% url 'accounts:register' as register_url %}
+{% url 'accounts:home' as account_url %}
+
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-collapse fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ home_url }}">eCommerce</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item {% if request.path == home_url %}active{% endif %}">
+                    <a class="nav-link" href="{{ home_url }}">Home<span class="sr-only">
+                    (current)</span></a>
+                </li>
+                <li class="nav-item {% if request.path == products_url %}active{% endif %}">
+                    <a class="nav-link" href="{{ products_url }}">Product</a>
+                </li>
+                <li class="nav-item {% if request.path == contact_url %}active{% endif %}">
+                    <a class="nav-link" href="{{ contact_url }}">Contact</a>
+                </li>
+                <li class="nav-item {% if request.path == cart_url %}active{% endif %}">
+                    <a class="nav-link" href="{{ cart_url }}">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="badge badge-pill badge-danger navbar-cart-count">{{ request.session.cart_items }}</span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav nav mr-5 justify-content-end">
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Account
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <h6 class="dropdown-header">Hi {{ request.user.first_name }}</h6>
+                            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}"
+                               href=" {{ account_url }}">Home</a>
+                            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}"
+                               href=" {{ account_url }}">Preferences</a>
+                            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}"
+                               href=" {{ account_url }}">Billing</a>
+                            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}"
+                               href=" {{ account_url }}">History</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ logout_url }}">Logout</a>
+                        </div>
+                    </li>
+                {% else %}
+                    <li class="nav-item {% if request.path == login_url %}active{% endif %}">
+                        <a class="nav-link" href="{{ login_url }}">Login</a>
+                    </li>
+                    <li class="nav-item {% if request.path == register_url %}active{% endif %}">
+                        <a class="nav-link" href="{{ register_url }}">Register</a>
+                    </li>
+                {% endif %}
+            </ul>
+            {% include 'search/snippets/search_form.html' %}
+        </div>
+    </div>
+</nav>
+

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1>Account</h1>
+            <hr/>
+        </div>
+        <div class="col-12 col-md-3 my-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Account details</h5>
+                    <div class="list-group">
+                        <a class="list-group-item" href="#">Edit personal information</a>
+                        <a class="list-group-item" href="{{ password_reset_url }}">Password change</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-3 my-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Billing</h5>
+                    <div class="list-group">
+                        <a class="list-group-item" href="#">Orders</a>
+                        <a class="list-group-item" href="#">Addresses</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-3 my-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">History</h5>
+                    <div class="list-group">
+                        <a class="list-group-item" href="#">Last viewed products</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block base_head %}{% endblock base_head %}
+
+{% block content %}
+    <div class="col-md-12 text-center py-4">
+        <h1>{{ title }}</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 pl-5 lead">
+            <p>Products: <span class="badge badge-secondary">{{ products }}</span></p>
+            <p>Satisfied customers: <span class="badge badge-success">{{ orders }}</span></p>
+        </div>
+        <div class="col-sm-6 text-center lead">
+            {% if request.user.is_authenticated %}Hi, <b class="text-danger">{{ request.user.get_username }} !</b
+            >{% endif %}
+        </div>
+    </div>
+{% endblock content %}
+
+
+

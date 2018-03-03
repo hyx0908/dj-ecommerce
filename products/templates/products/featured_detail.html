@@ -1,0 +1,5 @@
+Title: {{ product.title }}<br>
+Description: {{ product.description }}<br>
+{% if product.image %}
+    Image: <img src="{{ product.image.url }}" class="img-fluid rounded-circle">
+{% endif %}

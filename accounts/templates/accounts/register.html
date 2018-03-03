@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="text-center">
+        <h1>Register</h1>
+    </div>
+    <div class="row">
+        <div class="col-sm-4 mx-auto">
+            <form method="post"> {% csrf_token %}
+                {% include 'products/snippets/form.html' with form=register_form %}
+            </form>
+        </div>
+    </div>
+{% endblock content %}

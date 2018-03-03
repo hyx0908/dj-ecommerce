@@ -1,0 +1,170 @@
+[
+  {
+    "model": "products.product",
+    "pk": 1,
+    "fields": {
+      "title": "Shoes",
+      "slug": "Shoes",
+      "description": "Reebok",
+      "price": "99.99",
+      "image": "",
+      "featured": true,
+      "active": true,
+      "timestamp": "2017-12-15T20:27:03.233Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 2,
+    "fields": {
+      "title": "Cap",
+      "slug": "cap",
+      "description": "Adidas",
+      "price": "49.99",
+      "image": "products/564020/564020.jpg",
+      "featured": false,
+      "active": true,
+      "timestamp": "2017-12-15T20:27:03.233Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 3,
+    "fields": {
+      "title": "T-shirt",
+      "slug": "t-shirt",
+      "description": "Nike najkiNike najkiNike najkiNike najkiNike najkiNike najkiNike najkiNike najkiNike najkiNike najkiNike najkiNike najkiNike najkiNike najkiNike najkiNike najkiNike najkiNike najkiNike najkiNike najkiNike najkiNike najkiNike najkiNike najkiNike najkiNike najkiNike najkiNike najkiNike najkiNike najkiNike najkiNike najkiNike najkiNike najki",
+      "price": "15.99",
+      "image": "",
+      "featured": true,
+      "active": true,
+      "timestamp": "2017-12-15T20:27:03.233Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 4,
+    "fields": {
+      "title": "Hat",
+      "slug": "hat",
+      "description": "Rodeo hat",
+      "price": "1.99",
+      "image": "",
+      "featured": false,
+      "active": true,
+      "timestamp": "2017-12-15T20:27:03.233Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 5,
+    "fields": {
+      "title": "Blouse",
+      "slug": "Blouse",
+      "description": "Red",
+      "price": "55.77",
+      "image": "products/33622/33622.png",
+      "featured": false,
+      "active": true,
+      "timestamp": "2017-12-15T20:27:03.233Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 6,
+    "fields": {
+      "title": "Shirt",
+      "slug": "shirt",
+      "description": "Black shirt",
+      "price": "5.99",
+      "image": "",
+      "featured": true,
+      "active": true,
+      "timestamp": "2017-12-15T20:27:03.233Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 7,
+    "fields": {
+      "title": "ACTIVE TEST",
+      "slug": "active-test",
+      "description": "ACTIVE TEST",
+      "price": "3423.00",
+      "image": "",
+      "featured": false,
+      "active": false,
+      "timestamp": "2017-12-15T20:27:03.233Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 8,
+    "fields": {
+      "title": "BMW",
+      "slug": "bmw",
+      "description": "wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum wrum",
+      "price": "7564.00",
+      "image": "",
+      "featured": false,
+      "active": true,
+      "timestamp": "2017-12-15T21:11:10.727Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 9,
+    "fields": {
+      "title": "Hat",
+      "slug": "hat-c32e",
+      "description": "haht hhhahahahat hat Hat",
+      "price": "111.00",
+      "image": "",
+      "featured": false,
+      "active": true,
+      "timestamp": "2017-12-18T20:46:44.884Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 10,
+    "fields": {
+      "title": "hat",
+      "slug": "hat-iqni",
+      "description": "HAT",
+      "price": "121.00",
+      "image": "",
+      "featured": false,
+      "active": true,
+      "timestamp": "2017-12-19T18:52:47.704Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 11,
+    "fields": {
+      "title": "bmw",
+      "slug": "bmw-3o2c",
+      "description": "bmwwww",
+      "price": "999.00",
+      "image": "",
+      "featured": false,
+      "active": true,
+      "timestamp": "2017-12-19T18:53:01.715Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 12,
+    "fields": {
+      "title": "woda",
+      "slug": "woda",
+      "description": "Woda mineralna",
+      "price": "1.00",
+      "image": "",
+      "featured": false,
+      "active": true,
+      "timestamp": "2018-01-05T14:05:24.806Z"
+    }
+  }
+]

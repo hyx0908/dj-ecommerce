@@ -1,0 +1,12 @@
+{% load crispy_forms_filters %}
+
+<div class="form-group">
+    <form method="post" action="{% if action_url %}{{ action_url }}{% else %}{% url 'accounts:login' %}{% endif %}">
+        {% csrf_token %}
+        {% if next_url %}
+            <input type="hidden" name="next" value="{{ next_url }}">
+        {% endif %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-success">Login</button>
+    </form>
+</div>

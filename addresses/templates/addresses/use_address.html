@@ -1,0 +1,18 @@
+<form method="POST" action="{{ action_url }}">{% csrf_token %}
+    {% if next_url %}
+        <input type="hidden" name="next" value="{{ next_url }}">
+    {% endif %}
+    {% if address_type %}
+        <input type="hidden" name="address_type" value="{{ address_type }}">
+    {% endif %}
+    {% for address in address_qs %}
+        <label for="address-{{ address.id }}">
+            <input type="radio" name="shipping_address" id="address-{{ address.id }}" value="{{ address.id }}">
+            Address: {{ address.address_line_1 }}<br>
+            City: {{ address.city }}<br>
+            Zip code: {{ address.zipcode }}<br>
+            Country: {{ address.country }}
+        </label><br>
+    {% endfor %}
+    <button type="submit" class="btn btn-success">Use Address</button>
+</form>
