@@ -5,7 +5,8 @@ from .views import (
     guest_register_view,
     RegisterView,
     LoginView,
-    AccountHomeView
+    AccountHomeView,
+    AccountEmailActivationView
 )
 
 urlpatterns = [
@@ -15,4 +16,6 @@ urlpatterns = [
     url(r'^logout/$', LogoutView.as_view(), name='logout'),
     url(r'^register/$', RegisterView.as_view(), name='register'),
     url(r'^register/guest/$', guest_register_view, name='guest_register'),
+
+    url(r'^email/confirm/(?P<key>[0-9A-Za-z]+)/$', AccountEmailActivationView.as_view(), name='email_activate'),
 ]
