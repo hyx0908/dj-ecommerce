@@ -3,6 +3,7 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.core.mail import send_mail
 from django.db import models
+from django.db.models import Q
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 from django.template.loader import get_template
@@ -129,6 +130,9 @@ class EmailVerificationManager(models.Manager):
     def confirmable(self):
         return self.get_queryset().confirmable()
 
+    def email_exists(self, email):
+        return self.get_queryset().filter(Q(email=email) | Q(user__email=email)).filter(activated=False)
+
 
 class EmailVerification(models.Model):
     user = models.ForeignKey(User)
@@ -172,8 +176,7 @@ class EmailVerification(models.Model):
         if not self.activated and not self.forced_expired:
             if self.key:
                 base_url = getattr(settings, 'BASE_URL', 'http://127.0.0.1:8000')
-                key_path = reverse('accounts:email_activate', kwargs={'key': self.key })
-                print(key_path)
+                key_path = reverse('accounts:email_activate', kwargs={'key': self.key})
                 path = "{base}{key}".format(base=base_url, key=key_path)
                 context = {
                     'path': path,

@@ -17,5 +17,7 @@ urlpatterns = [
     url(r'^register/$', RegisterView.as_view(), name='register'),
     url(r'^register/guest/$', guest_register_view, name='guest_register'),
 
+    # url(r'^email/confirm/$', AccountEmailActivationView.as_view(), name='email_activate'),
     url(r'^email/confirm/(?P<key>[0-9A-Za-z]+)/$', AccountEmailActivationView.as_view(), name='email_activate'),
+    url(r'^email/resend-activation/$', AccountEmailActivationView.as_view(), name='email_resend_activation'),
 ]

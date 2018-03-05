@@ -3,12 +3,13 @@ from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, FormView, DetailView, View
+from django.views.generic.edit import FormMixin
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy, reverse
 from django.utils.http import is_safe_url
 from django.utils.safestring import mark_safe
 
-from .forms import LoginForm, RegisterForm, GuestForm
+from .forms import LoginForm, RegisterForm, GuestForm, EmailReactivationForm
 from .models import GuestEmail, EmailVerification
 from .signals import user_logged_in
 
@@ -22,25 +23,59 @@ class AccountHomeView(LoginRequiredMixin, DetailView):
         return self.request.user
 
 
-class AccountEmailActivationView(View):
-    def get(self, request, key, *args, **kwargs):
-        qs = EmailVerification.objects.filter(key__iexact=key)
-        confirmable_qs = qs.confirmable()
-        if confirmable_qs.count() == 1:
-            obj = confirmable_qs.first()
-            obj.activate()
-            messages.success(request, 'Your email has been confirmed. You can login.')
-            return redirect('accounts:login')
-        else:
-            activated_qs = qs.filter(activated=True)
-            if activated_qs.exists():
-                reset_link = reverse("password_reset")
-                msg = """Your email has been confirmed.
-                Do you need to <a href="{link}">reset your password</a>?
-                """.format(link=reset_link)
-                messages.success(request, mark_safe(msg))
+class AccountEmailActivationView(FormMixin, View):
+    form_class = EmailReactivationForm
+    success_url = reverse_lazy('accounts:login')
+
+    key = None
+
+    def get(self, request, key=None, *args, **kwargs):
+        self.key = key
+        if key is not None:
+            qs = EmailVerification.objects.filter(key__iexact=key)
+            confirmable_qs = qs.confirmable()
+            if confirmable_qs.count() == 1:
+                obj = confirmable_qs.first()
+                obj.activate()
+                messages.success(request, 'Your email has been confirmed. You can login.')
                 return redirect('accounts:login')
-        return render(request, 'registration/activation-error.html', {})
+            else:
+                activated_qs = qs.filter(activated=True)
+                if activated_qs.exists():
+                    reset_link = reverse("password_reset")
+                    msg = """Your email has been confirmed.
+                    Do you need to <a href="{link}">reset your password</a>?
+                    """.format(link=reset_link)
+                    messages.success(request, mark_safe(msg))
+                    return redirect('accounts:login')
+
+        context = {
+            'form': self.get_form(),
+            'key': key
+        }
+        return render(request, 'registration/activation-error.html', context)
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        msg = "Activation link sent, please check your email."
+        request = self.request
+        messages.success(request, msg)
+        email = form.cleaned_data.get('email')
+        obj = EmailVerification.objects.email_exists(email).first()
+        user = obj.user
+        new_activation = EmailVerification.objects.create(user=user, email=email)
+        new_activation.send_email_verification()
+        qs = EmailVerification.objects.exclude(key__exact=new_activation.key).filter(user=user, email=email)
+        if qs.exists():
+            qs.delete()
+
+        return super(AccountEmailActivationView, self).form_valid(form)
 
 
 def guest_register_view(request):
@@ -73,7 +108,7 @@ class LoginView(FormView):
                 messages.error(request, "This user is inactive")
                 return super(LoginView, self).form_valid(form)  # form_invalid ?
 
-            login(request, user)
+            login(request, user, )
             user_logged_in.send(user.__class__, instance=user, request=request)
 
             if 'quest_email_id' in request.session:

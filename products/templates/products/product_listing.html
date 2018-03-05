@@ -1,7 +1,6 @@
 <div class="row">
     {% for product in product_list %}
         <div class="col">
-        {{ forloop.counter }}
         {% include 'products/snippets/card.html' with instance=product %}
 
         {% if forloop.counter|divisibleby:3 %}
