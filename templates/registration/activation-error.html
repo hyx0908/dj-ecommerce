@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+
+{% load crispy_forms_filters %}
+
 {% block content %}
     <div class='row'>
         <div class="col-12 text-center py-5">
@@ -8,10 +11,10 @@
                 <h1 class='my-5'>Re-activate your email below.</h1>
             {% endif %}
         </div>
-        <div class="col-12 text-center">
-            <form method="POST" action="">
+        <div class="col-sm-4 mx-auto">
+            <form method="POST">
                 {% csrf_token %}
-                {{ form.as_p }}
+                {{ form|crispy }}
                 <input class="btn btn-default" type="submit" value="Resend activation link">
             </form>
         </div>

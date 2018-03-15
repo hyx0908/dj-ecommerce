@@ -131,6 +131,7 @@ class EmailVerificationManager(models.Manager):
         return self.get_queryset().confirmable()
 
     def email_exists(self, email):
+        """ Check if email exists and if it's not activated """
         return self.get_queryset().filter(Q(email=email) | Q(user__email=email)).filter(activated=False)
 
 
