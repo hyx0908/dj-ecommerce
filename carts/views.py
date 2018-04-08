@@ -36,6 +36,7 @@ def cart_home(request):
 
 def cart_update(request):
     product_id = request.POST.get('product_id')
+    product_obj = None
     if product_id is not None:
         try:
             product_obj = Product.objects.get(id=product_id)
@@ -67,8 +68,8 @@ def checkout_home(request):
     address_qs = None
     billing_address_qs = None
     shipping_address_qs = None
-    login_form = LoginForm()
-    guest_form = GuestForm()
+    login_form = LoginForm(request=request)
+    guest_form = GuestForm(request=request)
     address_form = AddressForm()
     shipping_address_id = request.session.get('shipping_address_id', None)
     billing_address_id = request.session.get('billing_address_id', None)

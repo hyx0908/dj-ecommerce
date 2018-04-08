@@ -61,8 +61,8 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser):
     email = models.EmailField(verbose_name="email address", unique=True, max_length=255)
-    first_name = models.CharField('first name', max_length=30)
-    last_name = models.CharField('last name', max_length=30)
+    first_name = models.CharField("first name", max_length=30)
+    last_name = models.CharField("last name", max_length=30)
     date_joined = models.DateTimeField('date joined', auto_now_add=True)
     is_active = models.BooleanField(default=True)
     staff = models.BooleanField(default=False)

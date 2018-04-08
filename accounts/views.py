@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import CreateView, FormView, DetailView, View
+from django.views.generic import CreateView, FormView, DetailView, View, UpdateView
 from django.views.generic.edit import FormMixin
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy, reverse
@@ -9,7 +9,7 @@ from django.utils.http import is_safe_url
 from django.utils.safestring import mark_safe
 
 from ecommerce.mixins import NextURLMixin, RequestFormMixin
-from .forms import LoginForm, RegisterForm, GuestForm, EmailReactivationForm
+from .forms import LoginForm, RegisterForm, GuestForm, EmailReactivationForm, UserDetailUpdateForm
 from .models import GuestEmail, EmailVerification
 
 User = settings.AUTH_USER_MODEL
@@ -99,10 +99,21 @@ def guest_register_view(request):
     return redirect(reverse('accounts:register'))
 
 
+class GuestRegisterView(NextURLMixin, RequestFormMixin, CreateView):
+    form_class = GuestForm
+    default_next = reverse_lazy('accounts:register')
+
+    def get_success_url(self):
+        return self.get_next_url()
+
+    def form_invalid(self, form):
+        return redirect(self.default_next)
+
+
 class LoginView(NextURLMixin, RequestFormMixin, FormView):
     form_class = LoginForm
     template_name = 'accounts/login.html'
-    success_url = reverse_lazy('home')
+    # success_url = reverse_lazy('home')
 
     default_next = reverse_lazy('home')
 
@@ -121,3 +132,12 @@ class RegisterView(CreateView):
     form_class = RegisterForm
     template_name = 'accounts/register.html'
     success_url = reverse_lazy('home')
+
+
+class UserDetailUpdateView(LoginRequiredMixin, UpdateView):
+    form_class = UserDetailUpdateForm
+    template_name = 'accounts/user_detail_update.html'
+    success_url = reverse_lazy('accounts:home')
+
+    def get_object(self, queryset=None):
+        return self.request.user

@@ -1,5 +1,19 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% include 'products/product_listing.html' %}
+    <div class="row">
+    {% for product in product_list %}
+        <div class="col">
+        {% include 'products/snippets/card.html' with instance=product %}
+
+        {% if forloop.counter|divisibleby:3 %}
+            </div> </div><div class='row'><div class='col-12'><hr/></div>
+        {% else %}
+            </div>
+        {% endif %}
+
+    {% empty %}
+        <p class="text-danger">Sorry, no product available.</p>
+    {% endfor %}
+
 {% endblock content %}

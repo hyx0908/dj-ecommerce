@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1>Product View History</h1>
+            <hr/>
+        </div>
+        {% for obj in object_list %}
+            <div class="col">
+                {% include 'products/snippets/card.html' with instance=obj.content_object %}
+
+                {% if forloop.counter|divisibleby:3 %}
+                    </div> </div>
+                    <div class='row'>
+                        <div class='col-12'>
+                            <hr/>
+                        </div>
+                        {% else %}
+                    </div>
+                {% endif %}
+
+        {% empty %}
+            <p class="text-danger">No last viewed product.</p>
+        {% endfor %}
+{% endblock content %}

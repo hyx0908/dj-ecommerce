@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% url 'password_reset' as password_reset_url %}
 
     <div class="row">
         <div class="col-12 text-center">
@@ -13,8 +12,8 @@
                 <div class="card-body">
                     <h5 class="card-title">Account details</h5>
                     <div class="list-group">
-                        <a class="list-group-item" href="#">Edit personal information</a>
-                        <a class="list-group-item" href="{{ password_reset_url }}">Password change</a>
+                        <a class="list-group-item" href="{% url 'accounts:detail_update' %}">Update details</a>
+                        <a class="list-group-item" href="{% url 'password_change' %}">Change password</a>
                     </div>
                 </div>
             </div>
@@ -35,7 +34,7 @@
                 <div class="card-body">
                     <h5 class="card-title">History</h5>
                     <div class="list-group">
-                        <a class="list-group-item" href="#">Last viewed products</a>
+                        <a class="list-group-item" href="{% url 'accounts:history_products' %}">Last viewed products</a>
                     </div>
                 </div>
             </div>
