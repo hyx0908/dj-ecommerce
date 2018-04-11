@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^account/', include('accounts.urls', namespace='accounts')),
     url(r'^accounts/', include('accounts.passwords.urls')),
     url(r'^cart/', include('carts.urls', namespace='cart')),
+    url(r'^orders/', include('orders.urls', namespace='orders')),
     url(r'^products/', include('products.urls', namespace='products')),
     url(r'^search/', include('search.urls', namespace='search')),
 

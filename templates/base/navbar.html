@@ -8,6 +8,7 @@
 {% url 'accounts:home' as account_url %}
 {% url 'accounts:detail_update' as detail_update_url %}
 {% url 'accounts:history_products' as history_url %}
+{% url 'orders:list' as orders_url %}
 
 
 
@@ -50,8 +51,8 @@
                                href=" {{ account_url }}">Home</a>
                             <a class="dropdown-item {% if request.path == detail_update_url %}active{% endif %}"
                                href=" {{ detail_update_url }}">Personal info</a>
-                            <a class="dropdown-item {% if request.path == account_url %}active{% endif %}"
-                               href=" {{ account_url }}">Orders</a>
+                            <a class="dropdown-item {% if request.path == orders_url %}active{% endif %}"
+                               href=" {{ orders_url }}">Orders</a>
                             <a class="dropdown-item {% if request.path == history_url %}active{% endif %}"
                                href=" {{ history_url }}">History</a>
                             <div class="dropdown-divider"></div>

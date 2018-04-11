@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
+from django.urls import reverse
 
 from math import fsum
 
@@ -10,7 +11,22 @@ from ecommerce.utils import unique_order_id_generator
 from carts.models import Cart
 
 
+class OrderManagerQuerySet(models.QuerySet):
+    def by_request(self, request):
+        billing_profile, created = BillingProfile.objects.new_or_get(request)
+        return self.filter(billing_profile=billing_profile)
+
+    def not_created(self):
+        return self.exclude(status='CREATED')
+
+
 class OrderManager(models.Manager):
+    def get_queryset(self):
+        return OrderManagerQuerySet(self.model, using=self._db)
+
+    def by_request(self, request):
+        return self.get_queryset().by_request(request)
+
     def new_or_get(self, billing_profile, cart_obj):
         created = False
         qs = self.get_queryset().filter(billing_profile=billing_profile,
@@ -36,18 +52,33 @@ class Order(models.Model):
 
     order_id = models.CharField(max_length=120, blank=True)
     cart = models.ForeignKey(Cart)
-    billing_profile = models.ForeignKey(BillingProfile, null=True, blank=True)
+    billing_profile = models.ForeignKey(BillingProfile, null=True, blank=True, related_name='orders')
     shipping_address = models.ForeignKey(Address, related_name='shipping_address', null=True, blank=True)
     billing_address = models.ForeignKey(Address, related_name='billing_address', null=True, blank=True)
     status = models.CharField(max_length=12, choices=ORDER_STATUS_CHOICES, default='CREATED')
     shipping_total = models.DecimalField(default=9.99, max_digits=10, decimal_places=2)
     total = models.DecimalField(default=0.00, max_digits=10, decimal_places=2)
     active = models.BooleanField(default=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     objects = OrderManager()
 
+    class Meta:
+        ordering = ['-timestamp']
+
     def __str__(self):
         return self.order_id
+
+    def get_absolute_url(self):
+        return reverse('orders:order-detail', kwargs={'order_id': self.order_id})
+
+    def get_status(self):
+        if self.status == 'CANCELLED':
+            return 'Cancelled'
+        elif self.status == 'SHIPPED':
+            return 'Shipped'
+        else:
+            return 'Shipping soon'
 
     def update_total(self):
         cart_total = self.cart.total
@@ -71,6 +102,7 @@ class Order(models.Model):
             self.status = 'PAID'
             self.save()
         return self.status
+
 
 @receiver(pre_save, sender=Order)
 def pre_save_order_id_receiver(sender, instance, *args, **kwargs):
