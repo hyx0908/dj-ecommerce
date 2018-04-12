@@ -8,15 +8,6 @@ from carts.models import Cart
 from .models import Product
 
 
-# class ProductFeaturedListView(ListView):
-#     template_name = 'products/product_list.html'
-#     queryset = Product.objects.features()
-#
-#
-# class ProductFeaturedDetailView(ObjectViewedMixin, DetailView):
-#     template_name = 'products/featured_detail.html'
-#     queryset = Product.objects.all().featured()
-
 class UserProductHistoryView(LoginRequiredMixin, ListView):
     model = Product
     template_name = 'products/product_history.html'

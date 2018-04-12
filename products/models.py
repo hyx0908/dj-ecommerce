@@ -23,11 +23,11 @@ class ProductQuerySet(models.QuerySet):
         return self.filter(lookups).distinct()
 
 
-class ProductManager(models.Manager):  # custom manager
+class ProductManager(models.Manager):
     def get_queryset(self):
         return ProductQuerySet(self.model, using=self._db)
 
-    def all(self):  # rewrite all() method
+    def all(self):
         return self.get_queryset().active()
 
     def features(self):

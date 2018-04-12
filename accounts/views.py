@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import CreateView, FormView, DetailView, View, UpdateView
 from django.views.generic.edit import FormMixin
 from django.shortcuts import redirect, render
@@ -42,9 +43,7 @@ class AccountEmailActivationView(NextURLMixin, FormMixin, View):
                 activated_qs = qs.filter(activated=True)
                 if activated_qs.exists():
                     reset_link = reverse("password_reset")
-                    msg = """Your email has been confirmed.
-                    Do you need to <a href="{link}">reset your password</a>?
-                    """.format(link=reset_link)
+                    msg = "Your email has been confirmed.".format(link=reset_link)
                     messages.success(request, mark_safe(msg))
                     return redirect('accounts:login')
 
@@ -60,7 +59,7 @@ class AccountEmailActivationView(NextURLMixin, FormMixin, View):
         if form.is_valid():
             return self.form_valid(form)
         else:
-            return self.form_invalid(form)  ## tutaj jest False, SPRAWDZIĆ TUTAJ !!!
+            return self.form_invalid(form)
 
     def form_valid(self, form):
         msg = "Activation link sent, please check your email."
@@ -113,7 +112,6 @@ class GuestRegisterView(NextURLMixin, RequestFormMixin, CreateView):
 class LoginView(NextURLMixin, RequestFormMixin, FormView):
     form_class = LoginForm
     template_name = 'accounts/login.html'
-    # success_url = reverse_lazy('home')
 
     default_next = reverse_lazy('home')
 
@@ -128,10 +126,11 @@ class LoginView(NextURLMixin, RequestFormMixin, FormView):
         return context
 
 
-class RegisterView(CreateView):
+class RegisterView(SuccessMessageMixin ,CreateView):
     form_class = RegisterForm
     template_name = 'accounts/register.html'
     success_url = reverse_lazy('home')
+    success_message = "Check your email <b>%(email)s</b> in order to activate account."
 
 
 class UserDetailUpdateView(LoginRequiredMixin, UpdateView):

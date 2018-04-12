@@ -144,7 +144,7 @@ class RegisterForm(forms.ModelForm):
         model = User
         fields = ('email', 'first_name', 'last_name')
 
-    def clean(self):  # _password2
+    def clean_password2(self):  # _password2
         password1 = self.cleaned_data.get('password1')
         password2 = self.cleaned_data.get('password2')
         if password1 and password2 and password1 != password2:
