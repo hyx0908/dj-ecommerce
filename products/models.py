@@ -6,6 +6,7 @@ from django.urls import reverse
 
 from ecommerce.utils import unique_slug_generator, upload_image_path
 
+
 class ProductQuerySet(models.QuerySet):
     def active(self):
         return self.filter(active=True)
@@ -15,10 +16,10 @@ class ProductQuerySet(models.QuerySet):
 
     def search(self, query):
         lookups = (
-            Q(title__icontains=query) |
-            Q(description__icontains=query) |
-            Q(price__icontains=query) |
-            Q(tag__title__icontains=query)
+                Q(title__icontains=query) |
+                Q(description__icontains=query) |
+                Q(price__icontains=query) |
+                Q(tag__title__icontains=query)
         )
         return self.filter(lookups).distinct()
 
@@ -63,6 +64,14 @@ class Product(models.Model):
     @property
     def name(self):
         return self.title
+
+    @property
+    def image_url(self):
+        if self.image:
+            return self.image.url
+        else:
+            return '/static/img/no-image.jpg'
+
 
 @receiver(pre_save, sender=Product)
 def products_pre_save_reveiver(sender, instance, *args, **kwargs):

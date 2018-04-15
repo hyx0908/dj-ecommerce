@@ -1,9 +1,7 @@
 <div class="card border border-secondary">
-    {% if instance.image %}
-        <a href="{{ instance.get_absolute_url }}">
-            <img class="card-img-top" src="{{ instance.image.url }}" alt="{{ instance.title }} logo">
-        </a>
-    {% endif %}
+    <a href="{{ instance.get_absolute_url }}">
+        <img class="card-img-top" src="{{ instance.image_url }}" alt="{{ instance.title }} logo">
+    </a>
     <div class="card-body">
         <h5 class="card-title"><a href="{{ instance.get_absolute_url }}">{{ instance.title }}</a></h5>
         <p class="card-text">{{ forloop.counter }} {{ instance.description|truncatechars:100 }}</p>
