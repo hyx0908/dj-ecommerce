@@ -49,3 +49,4 @@ def email_updated_receiver(sender, instance, *args, **kwargs):
         qs = BillingProfile.objects.get(user=user)
         if user_email is not None and qs.email != user_email:
             qs.email = user_email
+            qs.save()
