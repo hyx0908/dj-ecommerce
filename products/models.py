@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.db.models import Q
 from django.db.models.signals import pre_save
@@ -70,7 +71,7 @@ class Product(models.Model):
         if self.image:
             return self.image.url
         else:
-            return '/static/img/no-image.jpg'
+            return settings.STATIC_URL + 'img/no-image.jpg'
 
 
 @receiver(pre_save, sender=Product)
