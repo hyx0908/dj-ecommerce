@@ -1,3 +1,5 @@
+from decouple import config
+
 """
 Django settings for ecommerce project.
 
@@ -19,10 +21,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'l^fvehu04wz6f3_h9-f^+)!4m=@&#!#sad^ek$a&!1@3qcch(%'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.herokuapp.com']
 
@@ -156,7 +158,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'test.topsecret.py@gmail.com'
-EMAIL_HOST_PASSWORD = 'Marmolada99!'
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
