@@ -3,6 +3,9 @@ from .base import *
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
+BASE_URL = 'https://dj-ecommerce.herokuapp.com/'
+
+
 # Database
 import dj_database_url
 
