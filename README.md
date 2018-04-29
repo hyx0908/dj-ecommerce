@@ -12,3 +12,8 @@ https://dj-ecommerce.herokuapp.com/
 ##### Demo account: 
 - login: demo
 - password: demo1234
+
+#### TODO 
+TODO list:
+- set up Celery to asynchronous tasks like sending activation emails
+- integrate with Mailchimp
